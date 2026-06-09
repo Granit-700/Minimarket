@@ -2,129 +2,22 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import NavBar from "../NavBar";
 import "./Layout.css";
+import { cardList } from "../../../db";
+import { useParams } from "react-router-dom";
 
 const Layout = () => {
-  const cardList = [
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-    {
-      id: crypto.randomUUID(),
-      imageURL: "",
-      title: "title",
-      description: "hello world",
-      price: "150 KGS",
-    },
-  ];
+  const { category = "all" } = useParams();
+
+  const filtered = cardList.filter(
+    (card) => category === "all" || card.category === category
+  );
 
   return (
     <div className="container">
       <Header />
       <div className="content">
         <NavBar />
-        <Main cardList={cardList} />
+        <Main cardList={filtered} />
       </div>
     </div>
   );
