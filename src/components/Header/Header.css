@@ -1,14 +1,16 @@
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-bottom: 3px solid #000;
   margin-bottom: 40px;
 }
 
 .nav {
   display: flex;
-  width: 300px;
+  justify-content: space-between;
+  gap: 30px;
 }
 
 .nav div {
