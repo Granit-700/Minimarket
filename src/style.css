@@ -12,4 +12,5 @@ body div div {
 .content {
   display: flex;
   justify-content: space-between;
+  gap: 70px;
 }
