@@ -1,7 +1,7 @@
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import NavBar from "../NavBar";
-import "./Layout.css"
+import "./Layout.css";
 
 const Layout = () => {
   const cardList = [

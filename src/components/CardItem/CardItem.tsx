@@ -1,3 +1,5 @@
+import "./CardItem.css";
+
 interface CardItemProps {
   card: {
     id: string;
@@ -10,19 +12,24 @@ interface CardItemProps {
 
 const CardItem = (props: CardItemProps) => {
   const {
-    card: { imageURL, title, description, price },
+    card: { imageURL = "src/assets/icons/edit.svg", title, description, price },
   } = props;
+
   return (
-    <li>
+    <li className="card">
       <div className="card_header">
-        <button className="edit_btn">
-          <img src="" alt="" />
+        <button className="card_btn">
+          <img src="src/assets/icons/edit.svg" alt="edit" />
         </button>
-        <button className="delete_btn">
-          <img src="" alt="" />
+        <button className="card_btn">
+          <img src="src/assets/icons/delete.svg" alt="delete" />
         </button>
       </div>
-      <img src={imageURL} alt="" className="card_image" />
+      <img
+        src={imageURL || "src/assets/icons/image-default.svg"}
+        alt={title}
+        className="card_image"
+      />
       <div className="card_text">
         <h3>{title}</h3>
         <p>{description}</p>

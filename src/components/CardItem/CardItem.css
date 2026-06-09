@@ -1,0 +1,26 @@
+.card {
+  border: 1px solid #000;
+  border-radius: 5px;
+  width: 200px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card_header {
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+}
+
+.card_btn {
+  width: 20px;
+  height: 20px;
+}
+
+.card_image {
+  border: 1px solid grey;
+  height: 100px;
+  width: 100%;
+}

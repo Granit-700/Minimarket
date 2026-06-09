@@ -1,4 +1,4 @@
-import CardItem from "../CardItem";
+import CardItem from "../CardItem/CardItem";
 import "./Main.css";
 
 type MainProps = {
