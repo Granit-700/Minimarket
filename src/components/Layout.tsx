@@ -1,27 +1,132 @@
-import CardItem from "./CardItem";
-import "./Layout.css";
+import Header from "./Header/Header";
+import Main from "./Main/Main";
+import NavBar from "./NavBar";
 
-type MainProps = {
-  cardList: {
-    id: string;
-    imageURL: string;
-    title: string;
-    description: string;
-    price: string;
-  }[];
-};
+const Layout = () => {
+  const cardList = [
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+    {
+      id: crypto.randomUUID(),
+      imageURL: "",
+      title: "title",
+      description: "hello world",
+      price: "150 KGS",
+    },
+  ];
 
-const Main = ({ cardList }: MainProps) => {
   return (
-    <main>
-      <h2>All</h2>
-      <ul className="cardlist">
-        {cardList.map((card) => {
-          return <CardItem card={card} key={card.id} />;
-        })}
-      </ul>
-    </main>
+    <div className="container">
+      <Header />
+      <div className="content">
+        <NavBar />
+        <Main cardList={cardList} />
+      </div>
+    </div>
   );
 };
 
-export default Main;
+export default Layout;

@@ -2,22 +2,22 @@ const NavBar = () => {
   return (
     <nav>
       <li>
-        <a href="">All</a>
+        <a href="#">All</a>
       </li>
       <li>
-        <a href="">Category</a>
+        <a href="#">Category</a>
       </li>
       <li>
-        <a href="">Category</a>
+        <a href="#">Category</a>
       </li>
       <li>
-        <a href="">Category</a>
+        <a href="#">Category</a>
       </li>
       <li>
-        <a href="">Category</a>
+        <a href="#">Category</a>
       </li>
       <li>
-        <a href="">Category</a>
+        <a href="#">Category</a>
       </li>
     </nav>
   );
