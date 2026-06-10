@@ -1,7 +1,7 @@
 import type { ProductCardProps } from "../../types";
 import "./ProductCard.css";
 
-const CardItem = (props: ProductCardProps) => {
+const ProductCard = (props: ProductCardProps) => {
   const {
     product: {
       imageURL,
@@ -35,4 +35,4 @@ const CardItem = (props: ProductCardProps) => {
   );
 };
 
-export default CardItem;
+export default ProductCard;

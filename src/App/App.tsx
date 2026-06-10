@@ -2,12 +2,15 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import "./reset.css";
 import "./style.css";
+import ProductsPage from "../pages/ProductsPage";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />} />
-      <Route path="/:category" element={<Layout />} />
+      <Route path="/" element={<Layout />}>
+        <Route index element={<ProductsPage />} />
+        <Route path=":category" element={<ProductsPage />} />
+      </Route>
     </Routes>
   );
 }
