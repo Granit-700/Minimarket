@@ -1,6 +1,6 @@
 import Header from "../Header/Header";
-import Main from "../Main/Main";
-import NavBar from "../NavBar";
+import Main from "../ProductList/ProductList";
+import NavBar from "../NavBar/NavBar";
 import "./Layout.css";
 import { cardList } from "../../../db";
 import { useParams } from "react-router-dom";
@@ -17,7 +17,7 @@ const Layout = () => {
       <Header />
       <div className="content">
         <NavBar />
-        <Main cardList={filtered} />
+        <Main products={filtered} />
       </div>
     </div>
   );

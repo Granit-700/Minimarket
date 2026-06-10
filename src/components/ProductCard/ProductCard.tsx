@@ -1,18 +1,14 @@
-import "./CardItem.css";
+import type { ProductCardProps } from "../../types";
+import "./ProductCard.css";
 
-interface CardItemProps {
-  card: {
-    id: string;
-    imageURL: string;
-    title: string;
-    description: string;
-    price: string;
-  };
-}
-
-const CardItem = (props: CardItemProps) => {
+const CardItem = (props: ProductCardProps) => {
   const {
-    card: { imageURL = "src/assets/icons/edit.svg", title, description, price },
+    product: {
+      imageURL,
+      title,
+      description,
+      price,
+    },
   } = props;
 
   return (
