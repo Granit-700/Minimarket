@@ -40,3 +40,9 @@ export const cardList = [
     category: "cat-5",
   },
 ];
+
+export const categories = [
+  { id: "1", name: "cat-1" },
+  { id: "2", name: "cat-2" },
+  { id: "3", name: "cat-3" },
+];

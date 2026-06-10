@@ -3,12 +3,7 @@ import "./ProductCard.css";
 
 const ProductCard = (props: ProductCardProps) => {
   const {
-    product: {
-      imageURL,
-      title,
-      description,
-      price,
-    },
+    product: { imageURL, title, description, price },
   } = props;
 
   return (
