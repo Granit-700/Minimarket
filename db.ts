@@ -1,4 +1,6 @@
-export const cardList = [
+import type { ProductListType } from "./src/types";
+
+export const cardList: ProductListType = [
   {
     id: crypto.randomUUID(),
     imageURL: "1",

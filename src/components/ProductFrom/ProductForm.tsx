@@ -22,14 +22,13 @@ const ProductForm = () => {
     });
   };
 
-  const updateProduct = (prod: ProductCardType) => {
+  const updateProduct = (prod: Omit<ProductCardType, "id">) => {
     const index = cardList.findIndex((card) => card.id === id);
     console.log(index);
 
-    cardList.splice(index, 1, {
-      id,
-      ...prod,
-    });
+    if (!id) throw new Error("ID not found");
+
+    cardList.splice(index, 1, { id, ...prod });
   };
 
   const [title, setTitle] = useState(card?.title || "");
@@ -107,29 +106,26 @@ const ProductForm = () => {
       <button
         type="submit"
         onClick={() => {
-          
-          id ?
-
-          createProduct({
-            imageURL,
-            title,
-            description,
-            price,
-            category: category === "new" ? newCategory : category,
-          });
-
-          :
-
-          updateProduct({
-            imageURL,
-            title,
-            description,
-            price,
-            category: category === "new" ? newCategory : category,
-          });
-
-
-          // navigate("/");
+          if (!id) {
+            createProduct({
+              imageURL,
+              title,
+              description,
+              price,
+              category: category === "new" ? newCategory : category,
+            });
+            console.log("create");
+          } else {
+            updateProduct({
+              imageURL,
+              title,
+              description,
+              price,
+              category: category === "new" ? newCategory : category,
+            });
+            console.log("update");
+          }
+          navigate("/");
         }}
       >
         SUBMIT
