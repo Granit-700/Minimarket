@@ -5,6 +5,7 @@ export interface ProductCardType {
   title: string;
   description: string;
   price: string;
+  category: string;
 }
 
 export type ProductListType = ProductCardType[];

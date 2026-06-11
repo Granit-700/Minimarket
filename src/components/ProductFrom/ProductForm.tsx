@@ -1,14 +1,42 @@
 import { useState } from "react";
 import "./ProductForm.css";
 import { cardList, categories } from "../../../db";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import type { ProductCardType } from "../../types";
 
 const ProductForm = () => {
-  const [title, setTitle] = useState("");
-  const [imageURL, setImageURL] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
+  const { id } = useParams();
+
+  let card: ProductCardType | undefined;
+
+  if (id) {
+    console.log(id);
+    card = cardList.find((card) => card.id === id);
+    console.log(card);
+  }
+
+  const createProduct = (prod: Omit<ProductCardType, "id">) => {
+    cardList.push({
+      id: crypto.randomUUID(),
+      ...prod,
+    });
+  };
+
+  const updateProduct = (prod: ProductCardType) => {
+    const index = cardList.findIndex((card) => card.id === id);
+    console.log(index);
+
+    cardList.splice(index, 1, {
+      id,
+      ...prod,
+    });
+  };
+
+  const [title, setTitle] = useState(card?.title || "");
+  const [imageURL, setImageURL] = useState(card?.imageURL || "");
+  const [description, setDescription] = useState(card?.description || "");
+  const [price, setPrice] = useState(card?.price || "");
+  const [category, setCategory] = useState(card?.category || "");
 
   const [newCategory, setNewCategory] = useState("");
 
@@ -43,7 +71,7 @@ const ProductForm = () => {
       <div>
         <h3>Price</h3>
         <input
-          type="number"
+          type="text"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
@@ -79,15 +107,29 @@ const ProductForm = () => {
       <button
         type="submit"
         onClick={() => {
-          cardList.push({
-            id: crypto.randomUUID(),
+          
+          id ?
+
+          createProduct({
             imageURL,
             title,
             description,
             price,
             category: category === "new" ? newCategory : category,
           });
-          navigate("/");
+
+          :
+
+          updateProduct({
+            imageURL,
+            title,
+            description,
+            price,
+            category: category === "new" ? newCategory : category,
+          });
+
+
+          // navigate("/");
         }}
       >
         SUBMIT

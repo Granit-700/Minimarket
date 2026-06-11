@@ -11,6 +11,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<ProductsPage />} />
         <Route path="products/add" element={<ProductForm />} />
+        <Route path="products/:id/edit" element={<ProductForm />} />
         <Route path=":category" element={<ProductsPage />} />
       </Route>
     </Routes>

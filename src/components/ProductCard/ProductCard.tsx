@@ -1,16 +1,19 @@
+import { Link } from "react-router-dom";
 import type { ProductCardProps } from "../../types";
 import "./ProductCard.css";
 
 const ProductCard = (props: ProductCardProps) => {
   const {
-    product: { imageURL, title, description, price },
+    product: { id, imageURL, title, description, price },
   } = props;
 
   return (
     <li className="card">
       <div className="card_header">
         <button className="card_btn">
-          <img src="src/assets/icons/edit.svg" alt="edit" />
+          <Link to={`/products/${id}/edit`}>
+            <img src="src/assets/icons/edit.svg" alt="edit" />
+          </Link>
         </button>
         <button className="card_btn">
           <img src="src/assets/icons/delete.svg" alt="delete" />
