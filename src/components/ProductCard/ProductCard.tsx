@@ -5,7 +5,12 @@ import "./ProductCard.css";
 const ProductCard = (props: ProductCardProps) => {
   const {
     product: { id, imageURL, title, description, price },
+    setProducts,
   } = props;
+
+  const deleteProduct = (id: string) => {
+    setProducts((prev) => prev.filter((p) => p.id !== id));
+  };
 
   return (
     <li className="card">
@@ -15,7 +20,7 @@ const ProductCard = (props: ProductCardProps) => {
             <img src="src/assets/icons/edit.svg" alt="edit" />
           </Link>
         </button>
-        <button className="card_btn">
+        <button className="card_btn" onClick={() => deleteProduct(id)}>
           <img src="src/assets/icons/delete.svg" alt="delete" />
         </button>
       </div>

@@ -18,8 +18,10 @@ export interface requiredValue {
 // Props
 export interface ProductCardProps {
   product: ProductCardType;
+  setProducts: React.Dispatch<React.SetStateAction<ProductListType>>;
 }
 
 export interface ProductListProps {
   products: ProductCardType[];
+  setProducts: React.Dispatch<React.SetStateAction<ProductListType>>;
 }
