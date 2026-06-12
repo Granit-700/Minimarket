@@ -14,6 +14,10 @@
   padding: 2px;
 }
 
+.error {
+  color: red;
+}
+
 .select-category {
   display: flex;
   flex-direction: column;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./ProductForm.css";
 import { cardList, categories } from "../../../db";
 import { useNavigate, useParams } from "react-router-dom";
-import type { ProductCardType } from "../../types";
+import type { ProductCardType, requiredValue } from "../../types";
 
 const ProductForm = () => {
   const { id } = useParams();
@@ -37,25 +37,96 @@ const ProductForm = () => {
     if (isNewCategory) categories.push({ id: newCategory });
   };
 
-  const [title, setTitle] = useState(card?.title || "");
+  const [requiredValue, setRequiredValue] = useState<requiredValue>({
+    title: card?.title || "",
+    price: card?.price || "",
+  });
+
   const [imageURL, setImageURL] = useState(card?.imageURL || "");
   const [description, setDescription] = useState(card?.description || "");
-  const [price, setPrice] = useState(card?.price || "");
   const [category, setCategory] = useState(card?.category || "");
+
+  const [errors, setErrors] = useState<requiredValue>({
+    title: "",
+    price: "",
+  });
+
+  const validate = (fields: requiredValue): requiredValue => {
+    const newErrors: requiredValue = {
+      title: "",
+      price: "",
+    };
+
+    if (!fields.title!.trim()) newErrors.title = "This field is required";
+    if (!fields.price!.trim()) {
+      newErrors.price = "This field is required";
+    } else if (isNaN(Number(fields.price))) {
+      newErrors.price = "This filed only for number";
+    }
+
+    return newErrors;
+  };
+
+  const handleChange = (field: keyof requiredValue, value: string) => {
+    setRequiredValue({ ...requiredValue, [field]: value });
+
+    if (errors[field]) {
+      setErrors({ ...errors, [field]: "" });
+    }
+  };
 
   const [newCategory, setNewCategory] = useState("");
 
   const navigate = useNavigate();
 
+  const hundleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const newErrors = validate(requiredValue);
+
+    const hasErrors = Object.values(newErrors).some((val) => val !== "");
+
+    if (hasErrors) {
+      setErrors(newErrors);
+      return;
+    }
+
+    if (!id) {
+      createProduct({
+        imageURL,
+        title: requiredValue.title,
+        description,
+        price: requiredValue.price,
+        category: category === "new" ? newCategory : category,
+      });
+      console.log("create");
+    } else {
+      updateProduct({
+        imageURL,
+        title: requiredValue.title,
+        description,
+        price: requiredValue.price,
+        category: category === "new" ? newCategory : category,
+      });
+      console.log("update");
+    }
+    const target = category === "new" ? newCategory : category;
+
+    createNewCategory(target);
+
+    navigate(`/${target}`);
+  };
+
   return (
-    <div className="product-form">
+    <form className="product-form" onSubmit={hundleSubmit}>
       <div>
         <h3>Title</h3>
         <input
           type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={requiredValue.title}
+          onChange={(e) => handleChange("title", e.target.value)}
         />
+        {errors.title && <span className="error">{errors.title}</span>}
       </div>
       <div>
         <h3>Image URL</h3>
@@ -77,9 +148,10 @@ const ProductForm = () => {
         <h3>Price</h3>
         <input
           type="text"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          value={requiredValue.price}
+          onChange={(e) => handleChange("price", e.target.value)}
         />
+        {errors.price && <span className="error">{errors.price}</span>}
       </div>
       <div className="select-category">
         <h3>Category</h3>
@@ -109,36 +181,8 @@ const ProductForm = () => {
           />
         )}
       </div>
-      <button
-        type="submit"
-        onClick={() => {
-          if (!id) {
-            createProduct({
-              imageURL,
-              title,
-              description,
-              price,
-              category: category === "new" ? newCategory : category,
-            });
-            console.log("create");
-          } else {
-            updateProduct({
-              imageURL,
-              title,
-              description,
-              price,
-              category: category === "new" ? newCategory : category,
-            });
-            console.log("update");
-          }
-          const target = category === "new" ? newCategory : category;
-          createNewCategory(target);
-          navigate(`/${target}`);
-        }}
-      >
-        SUBMIT
-      </button>
-    </div>
+      <button type="submit">SUBMIT</button>
+    </form>
   );
 };
 

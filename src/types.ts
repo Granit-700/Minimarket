@@ -10,6 +10,11 @@ export interface ProductCardType {
 
 export type ProductListType = ProductCardType[];
 
+export interface requiredValue {
+  title: string;
+  price: string;
+}
+
 // Props
 export interface ProductCardProps {
   product: ProductCardType;

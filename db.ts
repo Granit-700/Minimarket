@@ -50,3 +50,7 @@ export const categories = [
   { id: "cat-4" },
   { id: "cat-5" },
 ];
+export interface requiredValue {
+  title?: string;
+  price?: string;
+}
