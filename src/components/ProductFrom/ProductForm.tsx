@@ -31,6 +31,12 @@ const ProductForm = () => {
     cardList.splice(index, 1, { id, ...prod });
   };
 
+  const createNewCategory = (newCategory: string) => {
+    const isNewCategory = categories.every((cat) => cat.id !== newCategory);
+
+    if (isNewCategory) categories.push({ id: newCategory });
+  };
+
   const [title, setTitle] = useState(card?.title || "");
   const [imageURL, setImageURL] = useState(card?.imageURL || "");
   const [description, setDescription] = useState(card?.description || "");
@@ -126,6 +132,7 @@ const ProductForm = () => {
             console.log("update");
           }
           const target = category === "new" ? newCategory : category;
+          createNewCategory(target);
           navigate(`/${target}`);
         }}
       >
