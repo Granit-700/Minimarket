@@ -125,7 +125,8 @@ const ProductForm = () => {
             });
             console.log("update");
           }
-          navigate("/");
+          const target = category === "new" ? newCategory : category;
+          navigate(`/${target}`);
         }}
       >
         SUBMIT
