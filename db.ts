@@ -2,7 +2,7 @@ import type { CategoriesType, ProductListType } from "./src/types";
 
 export const cardList: ProductListType = [
   {
-    id: crypto.randomUUID(),
+    id: "1",
     imageURL: "1",
     title: "1",
     description: "1 1",
@@ -10,7 +10,7 @@ export const cardList: ProductListType = [
     category: "cat-1",
   },
   {
-    id: crypto.randomUUID(),
+    id: "2",
     imageURL: "2 2",
     title: "2",
     description: "2 2",
@@ -18,7 +18,7 @@ export const cardList: ProductListType = [
     category: "cat-2",
   },
   {
-    id: crypto.randomUUID(),
+    id: "3",
     imageURL: "3",
     title: "3",
     description: "3 3",
@@ -26,7 +26,7 @@ export const cardList: ProductListType = [
     category: "cat-3",
   },
   {
-    id: crypto.randomUUID(),
+    id: "4",
     imageURL: "4",
     title: "4",
     description: "4 4",
@@ -34,7 +34,7 @@ export const cardList: ProductListType = [
     category: "cat-4",
   },
   {
-    id: crypto.randomUUID(),
+    id: "5",
     imageURL: "5",
     title: "5",
     description: "5 5",
