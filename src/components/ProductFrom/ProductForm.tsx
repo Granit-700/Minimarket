@@ -110,7 +110,7 @@ const ProductForm = (props: ProductFormProps) => {
 
     if (hasErrors) {
       setErrors(newErrors);
-      toast.error("Invalid fields");
+      toast.warning("Invalid fields");
       return;
     }
 
