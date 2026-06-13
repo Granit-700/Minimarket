@@ -6,6 +6,7 @@ import ProductsPage from "../pages/ProductsPage";
 import ProductForm from "../components/ProductFrom/ProductForm";
 import { cardList, categories as initCategories } from "../../db";
 import { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [products, setProducts] = useState(cardList);
@@ -14,46 +15,49 @@ function App() {
   const location = useLocation();
 
   return (
-    <Routes>
-      <Route path="/" element={<Layout categories={categories} />}>
-        <Route
-          index
-          element={
-            <ProductsPage products={products} setProducts={setProducts} />
-          }
-        />
-        <Route
-          path="products/add"
-          element={
-            <ProductForm
-              key={location.pathname}
-              products={products}
-              categories={categories}
-              setProducts={setProducts}
-              setCategories={setCategories}
-            />
-          }
-        />
-        <Route
-          path="products/:id/edit"
-          element={
-            <ProductForm
-              key={location.pathname}
-              products={products}
-              categories={categories}
-              setProducts={setProducts}
-              setCategories={setCategories}
-            />
-          }
-        />
-        <Route
-          path=":category"
-          element={
-            <ProductsPage products={products} setProducts={setProducts} />
-          }
-        />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Layout categories={categories} />}>
+          <Route
+            index
+            element={
+              <ProductsPage products={products} setProducts={setProducts} />
+            }
+          />
+          <Route
+            path="products/add"
+            element={
+              <ProductForm
+                key={location.pathname}
+                products={products}
+                categories={categories}
+                setProducts={setProducts}
+                setCategories={setCategories}
+              />
+            }
+          />
+          <Route
+            path="products/:id/edit"
+            element={
+              <ProductForm
+                key={location.pathname}
+                products={products}
+                categories={categories}
+                setProducts={setProducts}
+                setCategories={setCategories}
+              />
+            }
+          />
+          <Route
+            path=":category"
+            element={
+              <ProductsPage products={products} setProducts={setProducts} />
+            }
+          />
+        </Route>
+      </Routes>
+      <ToastContainer position="bottom-right" autoClose={3000} />
+    </>
   );
 }
 

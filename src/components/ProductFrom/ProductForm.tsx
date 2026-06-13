@@ -6,6 +6,7 @@ import type {
   ProductFormProps,
   requiredValue,
 } from "../../types";
+import { toast } from "react-toastify";
 
 const ProductForm = (props: ProductFormProps) => {
   const { products, categories, setProducts, setCategories } = props;
@@ -27,7 +28,10 @@ const ProductForm = (props: ProductFormProps) => {
   };
 
   const updateProduct = (prod: ProductCardType) => {
-    if (!id) throw new Error("ID not found");
+    if (!id) {
+      toast.error("ID not found");
+      throw new Error("ID not found");
+    }
 
     const updatedProducts = products.map((product) => {
       if (product.id === id) {
@@ -48,6 +52,7 @@ const ProductForm = (props: ProductFormProps) => {
 
     const newCategories = [...categories, { id: trimmedNewCategory }];
     setCategories(newCategories);
+    toast.info("New category created");
   };
 
   const [requiredValue, setRequiredValue] = useState<requiredValue>({
@@ -105,13 +110,17 @@ const ProductForm = (props: ProductFormProps) => {
 
     if (hasErrors) {
       setErrors(newErrors);
+      toast.error("Invalid fields");
       return;
     }
 
     const currentCatogory =
       requiredValue.category === "new" ? newCategory : requiredValue.category;
 
-    if (!currentCatogory.trim()) return;
+    if (!currentCatogory.trim()) {
+      toast.warning("Invalid fields");
+      return;
+    }
 
     if (!id) {
       createProduct({
@@ -121,7 +130,7 @@ const ProductForm = (props: ProductFormProps) => {
         price: requiredValue.price + " KGS",
         category: currentCatogory,
       });
-      console.log("create");
+    toast.success("Product create");
     } else {
       updateProduct({
         id,
@@ -131,7 +140,7 @@ const ProductForm = (props: ProductFormProps) => {
         price: requiredValue.price + " KGS",
         category: currentCatogory,
       });
-      console.log("update");
+    toast.success("Product update");
     }
     const target = currentCatogory;
 
