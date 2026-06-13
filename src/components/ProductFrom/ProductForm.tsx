@@ -57,7 +57,7 @@ const ProductForm = (props: ProductFormProps) => {
 
   const [requiredValue, setRequiredValue] = useState<requiredValue>({
     title: card?.title || "",
-    price: card?.price || "",
+    price: card?.price ? String(parseInt(card?.price)) : "",
     category: card?.category || "",
   });
 
