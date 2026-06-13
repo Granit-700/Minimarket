@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
-import { categories } from "../../../db";
+import type { NavBarProps } from "../../types";
 
-const NavBar = () => {
+const NavBar = ({ categories }: NavBarProps) => {
   return (
     <nav>
       <ul>

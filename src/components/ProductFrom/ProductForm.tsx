@@ -1,68 +1,85 @@
 import { useState } from "react";
 import "./ProductForm.css";
-import { cardList, categories } from "../../../db";
 import { useNavigate, useParams } from "react-router-dom";
-import type { ProductCardType, requiredValue } from "../../types";
+import type {
+  ProductCardType,
+  ProductFormProps,
+  requiredValue,
+} from "../../types";
 
-const ProductForm = () => {
+const ProductForm = (props: ProductFormProps) => {
+  const { products, categories, setProducts, setCategories } = props;
+
   const { id } = useParams();
 
   let card: ProductCardType | undefined;
 
   if (id) {
     console.log(id);
-    card = cardList.find((card) => card.id === id);
+    card = products.find((card) => card.id === id);
     console.log(card);
   }
 
   const createProduct = (prod: Omit<ProductCardType, "id">) => {
-    cardList.push({
-      id: crypto.randomUUID(),
-      ...prod,
-    });
+    const newProducts = [...products, { id: crypto.randomUUID(), ...prod }];
+
+    setProducts(newProducts);
   };
 
-  const updateProduct = (prod: Omit<ProductCardType, "id">) => {
-    const index = cardList.findIndex((card) => card.id === id);
-    console.log(index);
-
+  const updateProduct = (prod: ProductCardType) => {
     if (!id) throw new Error("ID not found");
 
-    cardList.splice(index, 1, { id, ...prod });
+    const updatedProducts = products.map((product) => {
+      if (product.id === id) {
+        return prod;
+      } else return product;
+    });
+
+    setProducts(updatedProducts);
   };
 
   const createNewCategory = (newCategory: string) => {
-    const isNewCategory = categories.every((cat) => cat.id !== newCategory);
+    const trimmedNewCategory = newCategory.trim();
 
-    if (isNewCategory) categories.push({ id: newCategory });
+    const findedCategory = categories.find(
+      (cat) => cat.id === trimmedNewCategory
+    );
+    if (findedCategory) return;
+
+    const newCategories = [...categories, { id: trimmedNewCategory }];
+    setCategories(newCategories);
   };
 
   const [requiredValue, setRequiredValue] = useState<requiredValue>({
     title: card?.title || "",
     price: card?.price || "",
+    category: card?.category || "",
   });
 
   const [imageURL, setImageURL] = useState(card?.imageURL || "");
   const [description, setDescription] = useState(card?.description || "");
-  const [category, setCategory] = useState(card?.category || "");
 
   const [errors, setErrors] = useState<requiredValue>({
     title: "",
     price: "",
+    category: "",
   });
 
   const validate = (fields: requiredValue): requiredValue => {
     const newErrors: requiredValue = {
       title: "",
       price: "",
+      category: "",
     };
 
-    if (!fields.title!.trim()) newErrors.title = "This field is required";
+    if (!fields.title!.trim()) newErrors.title = "This field is required!";
     if (!fields.price!.trim()) {
-      newErrors.price = "This field is required";
+      newErrors.price = "This field is required!";
     } else if (isNaN(Number(fields.price))) {
-      newErrors.price = "This filed only for number";
+      newErrors.price = "This filed only for number!";
     }
+    if (!fields.category!.trim())
+      newErrors.category = "Select or create category!";
 
     return newErrors;
   };
@@ -91,26 +108,32 @@ const ProductForm = () => {
       return;
     }
 
+    const currentCatogory =
+      requiredValue.category === "new" ? newCategory : requiredValue.category;
+
+    if (!currentCatogory.trim()) return;
+
     if (!id) {
       createProduct({
         imageURL,
         title: requiredValue.title,
         description,
-        price: requiredValue.price,
-        category: category === "new" ? newCategory : category,
+        price: requiredValue.price + " KGS",
+        category: currentCatogory,
       });
       console.log("create");
     } else {
       updateProduct({
+        id,
         imageURL,
         title: requiredValue.title,
         description,
-        price: requiredValue.price,
-        category: category === "new" ? newCategory : category,
+        price: requiredValue.price + " KGS",
+        category: currentCatogory,
       });
       console.log("update");
     }
-    const target = category === "new" ? newCategory : category;
+    const target = currentCatogory;
 
     createNewCategory(target);
 
@@ -156,9 +179,9 @@ const ProductForm = () => {
       <div className="select-category">
         <h3>Category</h3>
         <select
-          value={category}
+          value={requiredValue.category}
           onChange={(e) => {
-            setCategory(e.target.value);
+            handleChange("category", e.target.value);
           }}
         >
           <option value="">Select category</option>
@@ -172,7 +195,7 @@ const ProductForm = () => {
           <option value="new">Create new...</option>
         </select>
 
-        {category === "new" && (
+        {requiredValue.category === "new" && (
           <input
             type="text"
             placeholder="Category name"
@@ -180,6 +203,7 @@ const ProductForm = () => {
             onChange={(e) => setNewCategory(e.target.value)}
           />
         )}
+        {errors.category && <span className="error">{errors.category}</span>}
       </div>
       <button type="submit">SUBMIT</button>
     </form>

@@ -1,4 +1,4 @@
-import type { ProductListType } from "./src/types";
+import type { CategoriesType, ProductListType } from "./src/types";
 
 export const cardList: ProductListType = [
   {
@@ -43,14 +43,10 @@ export const cardList: ProductListType = [
   },
 ];
 
-export const categories = [
+export const categories: CategoriesType = [
   { id: "cat-1" },
   { id: "cat-2" },
   { id: "cat-3" },
   { id: "cat-4" },
   { id: "cat-5" },
 ];
-export interface requiredValue {
-  title?: string;
-  price?: string;
-}

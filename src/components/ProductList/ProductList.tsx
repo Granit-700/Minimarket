@@ -1,11 +1,14 @@
+import { useParams } from "react-router-dom";
 import type { ProductListProps } from "../../types";
 import ProductCard from "../ProductCard/ProductCard";
 import "./ProductList.css";
 
 const ProductList = ({ products, setProducts }: ProductListProps) => {
+  const { category = "All" } = useParams();
+
   return (
     <main className="main">
-      <h2>All</h2>
+      <h2>{category}</h2>
       <ul className="cardlist">
         {products.map((product) => {
           return (

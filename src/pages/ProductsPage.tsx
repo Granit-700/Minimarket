@@ -1,11 +1,8 @@
 import ProductList from "../components/ProductList/ProductList";
-import { cardList } from "../../db";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import type { ProductsPageProps } from "../types";
 
-const ProductsPage = () => {
-  const [products, setProducts] = useState(cardList);
-
+const ProductsPage = ({ products, setProducts }: ProductsPageProps) => {
   const { category = "all" } = useParams();
 
   const filtered = products.filter(
