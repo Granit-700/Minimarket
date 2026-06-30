@@ -4,55 +4,39 @@ import "./reset.css";
 import "./style.css";
 import ProductsPage from "../pages/ProductsPage";
 import ProductForm from "../components/ProductFrom/ProductForm";
-import { cardList, categories as initCategories } from "../../db";
-import { useState } from "react";
+import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
+import { useAppStore } from "../api/appStore";
 
 function App() {
-  const [products, setProducts] = useState(cardList);
-  const [categories, setCategories] = useState(initCategories);
-
   const location = useLocation();
+
+  const { products, fetchAll } = useAppStore();
+
+  useEffect(() => {
+    fetchAll();
+  }, [fetchAll]);
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<Layout categories={categories} />}>
-          <Route
-            index
-            element={
-              <ProductsPage products={products} setProducts={setProducts} />
-            }
-          />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<ProductsPage products={products} />} />
           <Route
             path="products/add"
             element={
-              <ProductForm
-                key={location.pathname}
-                products={products}
-                categories={categories}
-                setProducts={setProducts}
-                setCategories={setCategories}
-              />
+              <ProductForm key={location.pathname} products={products} />
             }
           />
           <Route
             path="products/:id/edit"
             element={
-              <ProductForm
-                key={location.pathname}
-                products={products}
-                categories={categories}
-                setProducts={setProducts}
-                setCategories={setCategories}
-              />
+              <ProductForm key={location.pathname} products={products} />
             }
           />
           <Route
             path=":category"
-            element={
-              <ProductsPage products={products} setProducts={setProducts} />
-            }
+            element={<ProductsPage products={products} />}
           />
         </Route>
       </Routes>

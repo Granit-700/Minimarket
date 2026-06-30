@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./ProductForm.css";
 import { useNavigate, useParams } from "react-router-dom";
 import type {
@@ -7,11 +7,15 @@ import type {
   requiredValue,
 } from "../../types";
 import { toast } from "react-toastify";
+import { useAppStore } from "../../api/appStore";
 
-const ProductForm = (props: ProductFormProps) => {
-  const { products, categories, setProducts, setCategories } = props;
-
+const ProductForm = ({ products }: ProductFormProps) => {
   const { id } = useParams();
+
+  const categories = useMemo(() => {
+    const map = new Map(products.map((p) => [p.category, { id: p.category }]));
+    return [...map.values()];
+  }, [products]);
 
   let card: ProductCardType | undefined;
 
@@ -21,39 +25,7 @@ const ProductForm = (props: ProductFormProps) => {
     console.log(card);
   }
 
-  const createProduct = (prod: Omit<ProductCardType, "id">) => {
-    const newProducts = [...products, { id: crypto.randomUUID(), ...prod }];
-
-    setProducts(newProducts);
-  };
-
-  const updateProduct = (prod: ProductCardType) => {
-    if (!id) {
-      toast.error("ID not found");
-      throw new Error("ID not found");
-    }
-
-    const updatedProducts = products.map((product) => {
-      if (product.id === id) {
-        return prod;
-      } else return product;
-    });
-
-    setProducts(updatedProducts);
-  };
-
-  const createNewCategory = (newCategory: string) => {
-    const trimmedNewCategory = newCategory.trim();
-
-    const findedCategory = categories.find(
-      (cat) => cat.id === trimmedNewCategory
-    );
-    if (findedCategory) return;
-
-    const newCategories = [...categories, { id: trimmedNewCategory }];
-    setCategories(newCategories);
-    toast.info("New category created");
-  };
+  const { createProduct, updateProduct } = useAppStore();
 
   const [requiredValue, setRequiredValue] = useState<requiredValue>({
     title: card?.title || "",
@@ -127,26 +99,21 @@ const ProductForm = (props: ProductFormProps) => {
         imageURL,
         title: requiredValue.title,
         description,
-        price: requiredValue.price + " KGS",
+        price: requiredValue.price,
         category: currentCatogory,
       });
-    toast.success("Product create");
+      toast.success("Product create");
     } else {
-      updateProduct({
-        id,
+      updateProduct(id, {
         imageURL,
         title: requiredValue.title,
         description,
-        price: requiredValue.price + " KGS",
+        price: requiredValue.price,
         category: currentCatogory,
       });
-    toast.success("Product update");
     }
-    const target = currentCatogory;
 
-    createNewCategory(target);
-
-    navigate(`/${target}`);
+    navigate(`/${currentCatogory}`);
   };
 
   return (

@@ -1,16 +1,14 @@
 import { Link } from "react-router-dom";
 import type { ProductCardProps } from "../../types";
 import "./ProductCard.css";
+import { useAppStore } from "../../api/appStore";
 
 const ProductCard = (props: ProductCardProps) => {
   const {
     product: { id, imageURL, title, description, price },
-    setProducts,
   } = props;
 
-  const deleteProduct = (id: string) => {
-    setProducts((prev) => prev.filter((p) => p.id !== id));
-  };
+  const { deleteProduct } = useAppStore();
 
   return (
     <li className="card">
@@ -32,7 +30,7 @@ const ProductCard = (props: ProductCardProps) => {
       <div className="card_text">
         <h3>{title}</h3>
         <p>{description}</p>
-        <span>{price}</span>
+        <span>{price} KGS</span>
       </div>
     </li>
   );
