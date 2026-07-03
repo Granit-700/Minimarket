@@ -1,5 +1,9 @@
 import { create } from "zustand";
-import type { ProductCardType, ProductListType } from "../types";
+import type {
+  CategoriesType,
+  ProductCardType,
+  ProductListType,
+} from "../types";
 import { productsApi } from "./productsApi";
 import { toast } from "react-toastify";
 
@@ -15,7 +19,8 @@ const errorLog = (e: unknown) => {
 
 interface AppStore {
   products: ProductListType;
-  fetchAll: () => Promise<void>;
+  categories: CategoriesType;
+  fetchProducts: (category?: string) => Promise<void>;
   createProduct: (data: Omit<ProductCardType, "id">) => Promise<void>;
   updateProduct: (
     id: string,
@@ -26,11 +31,24 @@ interface AppStore {
 
 export const useAppStore = create<AppStore>((set, get) => ({
   products: [],
-
-  fetchAll: async () => {
+  categories: [],
+  fetchProducts: async (cat = "all") => {
     try {
-      const { data } = await productsApi.getAll();
-      console.log(data);
+      let data: Record<string, ProductCardType> | null = null;
+
+      if (cat === "all") {
+        const res = await productsApi.getAll();
+        data = res.data;
+
+        const categories = [
+          ...new Set(Object.values(data ?? {}).map((p) => p.category)),
+        ].map((id) => ({ id }));
+
+        set({ categories });
+      } else {
+        const res = await productsApi.getCategory(cat);
+        data = res.data;
+      }
 
       const products = Object.entries(data ?? {}).map(([id, val]) => ({
         ...val,
@@ -44,30 +62,27 @@ export const useAppStore = create<AppStore>((set, get) => ({
   },
   createProduct: async (data) => {
     try {
-      const created = await productsApi.create(data);
-      console.log(created);
+      await productsApi.create(data);
 
-      await get().fetchAll();
+      await get().fetchProducts();
     } catch (e) {
       errorLog(e);
     }
   },
   updateProduct: async (id, data) => {
     try {
-      const updated = await productsApi.update(id, data);
-      console.log(updated);
+      await productsApi.update(id, data);
 
-      await get().fetchAll();
+      await get().fetchProducts();
     } catch (e) {
       errorLog(e);
     }
   },
   deleteProduct: async (id) => {
     try {
-      const deleted = await productsApi.delete(id);
-      console.log(deleted);
+      await productsApi.delete(id);
 
-      await get().fetchAll();
+      await get().fetchProducts();
     } catch (e) {
       errorLog(e);
     }

@@ -4,18 +4,13 @@ import "./reset.css";
 import "./style.css";
 import ProductsPage from "../pages/ProductsPage";
 import ProductForm from "../components/ProductFrom/ProductForm";
-import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import { useAppStore } from "../api/appStore";
 
 function App() {
   const location = useLocation();
 
-  const { products, fetchAll } = useAppStore();
-
-  useEffect(() => {
-    fetchAll();
-  }, [fetchAll]);
+  const { products } = useAppStore();
 
   return (
     <>
