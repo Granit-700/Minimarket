@@ -11,8 +11,8 @@ const NavBar = () => {
           <NavLink to="/">All</NavLink>
         </li>
         {categories.map(({ id }) => (
-          <li>
-            <NavLink key={id} to={`/${id}`} onClick={() => fetchProducts(id)}>
+          <li key={id}>
+            <NavLink to={`/${id}`} onClick={() => fetchProducts(id)}>
               {id}
             </NavLink>
           </li>
