@@ -20,9 +20,7 @@ const ProductForm = ({ products }: ProductFormProps) => {
   let card: ProductCardType | undefined;
 
   if (id) {
-    console.log(id);
     card = products.find((card) => card.id === id);
-    console.log(card);
   }
 
   const { createProduct, updateProduct } = useAppStore();
@@ -102,7 +100,6 @@ const ProductForm = ({ products }: ProductFormProps) => {
         price: requiredValue.price,
         category: currentCatogory,
       });
-      toast.success("Product create");
     } else {
       updateProduct(id, {
         imageURL,

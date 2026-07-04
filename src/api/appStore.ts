@@ -63,6 +63,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
   createProduct: async (data) => {
     try {
       await productsApi.create(data);
+      toast.success("Product create");
 
       await get().fetchProducts();
     } catch (e) {
@@ -72,6 +73,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
   updateProduct: async (id, data) => {
     try {
       await productsApi.update(id, data);
+      toast.success("Product update");
 
       await get().fetchProducts();
     } catch (e) {
@@ -81,6 +83,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
   deleteProduct: async (id) => {
     try {
       await productsApi.delete(id);
+      toast.success("Product deleted");
 
       await get().fetchProducts();
     } catch (e) {
